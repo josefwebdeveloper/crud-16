@@ -1,7 +1,8 @@
 <app-navbar></app-navbar>
+<button (click)="gotoAdd()" mat-raised-button color="accent">Accent</button>
 <mat-form-field>
   <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+  <input matInput (keyup)="applyFilter($event)" placeholder="search" #input>
 </mat-form-field>
 
 <div class="mat-elevation-z8">

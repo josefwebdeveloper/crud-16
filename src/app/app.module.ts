@@ -8,12 +8,14 @@ import {MaterialModule} from "./shared/material/material.module";
 import { HomeComponent } from './core/home/home.component';
 import {HttpClientModule} from "@angular/common/http";
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { ItemLayoutComponent } from './featured/item/item-layout/item-layout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    ItemLayoutComponent
   ],
   imports: [
     BrowserModule,

@@ -70,4 +70,8 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.update(newData)
         })
     }
+
+    gotoAdd() {
+        this.router.navigate(['item/add']);
+    }
 }

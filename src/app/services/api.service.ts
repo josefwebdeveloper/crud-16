@@ -23,4 +23,11 @@ export class ApiService {
     deletePhoto(id: number | null): Observable<Item> {
         return this.http.delete<Item>(`${environment.api}/${id}`);
     }
+    addPhoto(data:Item): Observable<Item> {
+        return this.http.post<Item>(`${environment.api}`,data);
+    }
+    updatePhoto(id:number | null,data:Item): Observable<Item> {
+        return this.http.put<Item>(`${environment.api}/${id}`,data);
+    }
+
 }
