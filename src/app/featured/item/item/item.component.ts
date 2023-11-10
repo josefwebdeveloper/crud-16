@@ -33,21 +33,18 @@ export class ItemComponent implements OnInit, OnDestroy {
                             switchMap(items => {
                                 if (!items.length) {
                                     return this.apiService.getPhoto(this.itemId);
+                                } else {
+                                    const item = items.find(i => i.id === this.itemId);
+                                    return of(item);
                                 }
-                                console.log(items)
-                                const item = items.find(i => i.id === this.itemId);
-                                console.log(item)
-                                return of(item);
                             })
                         );
                     }
                     return of(null);
-                    // Now you can use this.itemId to get data for the item
                 })
             ).subscribe(item => {
                 if (item) {
                     this.item = item;
-                    console.log(item)
                 }
             })
         );
