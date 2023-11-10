@@ -74,4 +74,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     gotoAdd() {
         this.router.navigate(['item/add']);
     }
+
+    edit(id:number, $event: MouseEvent) {
+        $event.stopPropagation();
+        this.router.navigate(['item/edit', id]);
+
+
+    }
 }

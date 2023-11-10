@@ -25,9 +25,7 @@ export class ItemComponent implements OnInit, OnDestroy {
 
 
     ngOnInit() {
-        setTimeout(() => {
 
-        },5000)
         this.subscription.add(this.route.paramMap.pipe(
                 switchMap(params => {
                     const id = params.get('id');
