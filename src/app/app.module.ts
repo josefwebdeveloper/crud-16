@@ -9,6 +9,7 @@ import { HomeComponent } from './core/home/home.component';
 import {HttpClientModule} from "@angular/common/http";
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { ItemLayoutComponent } from './featured/item/item-layout/item-layout.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ItemLayoutComponent } from './featured/item/item-layout/item-layout.com
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -12,7 +12,5 @@ export class AppComponent {
   title = 'crud-16';
   constructor(private contexts: ChildrenOutletContexts) {}
 
-  getRouteAnimationData() {
-    return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
-  }
+
 }

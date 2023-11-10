@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, DoCheck, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {of, Subscription, switchMap} from "rxjs";
 import {DataService} from "../../../services/data.service";
@@ -23,7 +23,11 @@ export class ItemComponent implements OnInit, OnDestroy {
     ) {
     }
 
+
     ngOnInit() {
+        setTimeout(() => {
+
+        },5000)
         this.subscription.add(this.route.paramMap.pipe(
                 switchMap(params => {
                     const id = params.get('id');
@@ -55,4 +59,7 @@ export class ItemComponent implements OnInit, OnDestroy {
     }
 
 
+    test() {
+
+    }
 }

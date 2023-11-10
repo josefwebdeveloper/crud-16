@@ -5,6 +5,7 @@ import { ItemComponent } from './item/item.component';
 import {MaterialModule} from "../../shared/material/material.module";
 import { AddItemComponent } from './add-item/add-item.component';
 import { EditComponent } from './edit/edit.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 
@@ -17,7 +18,8 @@ import { EditComponent } from './edit/edit.component';
     imports: [
         CommonModule,
         ItemRoutingModule,
-        MaterialModule
+        MaterialModule,
+        ReactiveFormsModule
     ]
 })
 export class ItemModule { }
