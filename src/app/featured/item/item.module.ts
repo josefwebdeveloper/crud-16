@@ -6,6 +6,7 @@ import {MaterialModule} from "../../shared/material/material.module";
 import { AddItemComponent } from './add-item/add-item.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { UpdateComponent } from './update/update.component';
+import {MatCardModule} from "@angular/material/card";
 
 
 
