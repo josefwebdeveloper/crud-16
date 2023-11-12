@@ -1,63 +1,43 @@
 import {Component, DoCheck, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {of, Subscription, switchMap} from "rxjs";
-import {DataService} from "../../../services/data.service";
-import {ApiService} from "../../../services/api.service";
+import {map, of, Subscription, switchMap} from "rxjs";
 import {Item} from "../../../shared/models/items.model";
+import {IAppState} from "../../../core/store/state/app.state";
+import {Store} from "@ngrx/store";
+import {ItemsSelectors} from "../../../core/store/selectors/items.selectors";
+import {itemsActions} from "../../../core/store/actions/items.actions";
 
 
 @Component({
-    selector: 'app-item',
-    templateUrl: './item.component.html',
-    styleUrls: ['./item.component.scss']
+  selector: 'app-item',
+  templateUrl: './item.component.html',
+  styleUrls: ['./item.component.scss']
 })
 export class ItemComponent implements OnInit, OnDestroy {
-    private subscription: any = new Subscription();
-    itemId!: number | null;
-    item!: Item;
+  private subscription: any = new Subscription();
+  item!: Item;
 
-    constructor(
-        private route: ActivatedRoute,
-        private dataService: DataService,
-        private apiService: ApiService
-    ) {
-    }
+  constructor(
+    private route: ActivatedRoute,
+    private store: Store<IAppState>
+  ) {
+  }
 
 
-    ngOnInit() {
+  ngOnInit() {
+    const id = parseInt(this.route.snapshot.params['id'], 10);
+    this.subscription.add(this.store.select(ItemsSelectors.selectItemById(id)).subscribe((data: any) => {
+      if (!data) {
+        this.store.dispatch(itemsActions.startGetItems());
+      } else {
+        this.item = data;
+      }
+    }))
 
-        this.subscription.add(this.route.paramMap.pipe(
-                switchMap(params => {
-                    const id = params.get('id');
-                    this.itemId = id ? +id : null;
-                    if (this.itemId) {
-                        return this.dataService.dataItems.pipe(
-                            switchMap(items => {
-                                if (!items.length) {
-                                    return this.apiService.getPhoto(this.itemId);
-                                } else {
-                                    const item = items.find(i => i.id === this.itemId);
-                                    return of(item);
-                                }
-                            })
-                        );
-                    }
-                    return of(null);
-                })
-            ).subscribe(item => {
-                if (item) {
-                    this.item = item;
-                }
-            })
-        );
-    }
+  }
 
-    ngOnDestroy(): void {
-        this.subscription.unsubscribe();
-    }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
-
-    test() {
-
-    }
 }

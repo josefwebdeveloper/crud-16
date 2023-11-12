@@ -7,6 +7,10 @@ import {MatSort} from "@angular/material/sort";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {DataService} from "../../services/data.service";
+import {Store} from "@ngrx/store";
+import {IAppState} from "../store/state/app.state";
+import {itemsActions} from "../store/actions/items.actions";
+import {ItemsSelectors} from "../store/selectors/items.selectors";
 
 @Component({
     selector: 'app-home',
@@ -23,27 +27,29 @@ export class HomeComponent implements OnInit, OnDestroy {
     constructor(
         private apiService: ApiService,
         private router: Router,
-        private dataService: DataService
+        private dataService: DataService,
+        private store: Store< IAppState>
     ) {
     }
 
     ngOnInit(): void {
         this.getPhotos()
+        this.subscription.add(this.store.select(ItemsSelectors.selectItems).subscribe((data: Item[]) => {
+            this.dataSource = new MatTableDataSource(data);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+        }))
+
     }
 
     getPhotos() {
-        this.apiService.getPhotos().subscribe((data) => {
-            if (data) {
-             this.update(data)
-            }
-        })
+
+             this.update()
+
     }
-    update(data:Item[]){
-        this.dataService.updateData(data);
-        console.log(data);
-        this.dataSource = new MatTableDataSource(data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+    update(){
+      this.store.dispatch(itemsActions.startGetItems());
+
     }
 
     ngOnDestroy(): void {
@@ -67,7 +73,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         event.stopPropagation();
         this.apiService.deletePhoto(id).subscribe((data) => {
             const newData = this.dataSource.data.filter((item) => item.id !== id);
-            this.update(newData)
+            // this.update(newData)
         })
     }
 
